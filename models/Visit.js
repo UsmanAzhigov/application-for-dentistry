@@ -5,10 +5,6 @@ const VisitSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumber: {
-    type: Number,
-    required: true,
-  },
   date: {
     type: Number,
     required: true,
@@ -32,6 +28,11 @@ const VisitSchema = new mongoose.Schema({
   numberTooth: {
     type: Number,
     required: true,
+  },
+  patient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Patient',
+    required: false,
   },
 });
 
