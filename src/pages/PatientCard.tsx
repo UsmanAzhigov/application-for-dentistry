@@ -11,13 +11,13 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export const PatientCard = () => {
-  const { fullName } = useParams();
+  const { id } = useParams();
   const [patientInfo, setPatientInfo] = React.useState([]);
   console.log();
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`http://localhost:5000/patients/${fullName}`);
+        const { data } = await axios.get(`http://localhost:5000/patients/${id}`);
         setPatientInfo(data);
         console.log(data);
       } catch (error) {
