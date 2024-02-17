@@ -1,4 +1,4 @@
-export const BtnDay = ({ isActive, choiceDay, dayOfWeek, dayOfMonth }) => {
+export const BtnDay = ({ isActive, choiceDay, dayOfWeek, dayOfMonth, onSelectDay }) => {
   const activeStyles = 'bg-[#00A6FB] shadow-blue-900';
   const inactiveStyles = 'bg-gray-100 ';
   const baseStyles = 'flex flex-col items-center py-[14px] px-[18px] rounded-[10px]';
@@ -8,6 +8,7 @@ export const BtnDay = ({ isActive, choiceDay, dayOfWeek, dayOfMonth }) => {
   return (
     <div
       onClick={choiceDay}
+      onClickCapture={onSelectDay}
       className={`${baseStyles} ${isActive ? activeStyles : inactiveStyles}`}>
       <span
         className={

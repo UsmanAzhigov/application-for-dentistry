@@ -1,8 +1,8 @@
-import React from 'react';
+import { Key } from 'react';
 
-export const BtnTime = ({ variant, arrivalTime }) => {
-  let buttonClassName = `flex items-center py-[9px] px-[8px] rounded-[10px] w-[55px] h-[32px]`;
-  let backgroundColor, textColor;
+export const BtnListTime = ({ variant, options, onChange }) => {
+  let buttonClassName = `flex items-center py-1 px-2 rounded-md w-24 h-12`;
+  let backgroundColor: string, textColor: string;
 
   switch (variant) {
     case 'upcoming':
@@ -30,9 +30,17 @@ export const BtnTime = ({ variant, arrivalTime }) => {
       textColor = 'text-[#00A6FB]';
     }
   }
+
   return (
-    <div className={`${buttonClassName} ${backgroundColor}`}>
-      <span className={`${textColor} text-[14px] font-bold`}>{arrivalTime}</span>
+    <div className="max-w-[318px] h-[427px] flex flex-wrap cursor-pointer">
+      {options.map((item: any, index: Key) => (
+        <div
+          onClick={() => onChange(item)}
+          key={index}
+          className={`${buttonClassName} ${backgroundColor} mx-1 my-1`}>
+          <span className={`${textColor} text-14 font-bold`}>{item}</span>
+        </div>
+      ))}
     </div>
   );
 };

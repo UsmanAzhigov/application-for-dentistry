@@ -4,13 +4,12 @@ import { Layout } from './widgets/Layout/Layout';
 import { AddVisiting } from './pages/AddVisiting';
 import { PatientCard } from './pages/PatientCard';
 
-const routes = [
-  { path: '/', element: <Home /> },
-  { path: '/add-visiting', element: <AddVisiting /> },
-  { path: '/patient-card', element: <PatientCard /> },
-];
-
 function App() {
+  const routes = [
+    { path: '/', element: <Home /> },
+    { path: '/add-visiting', element: <AddVisiting /> },
+    { path: '/patients/:fullName', element: <PatientCard /> },
+  ];
   return (
     <Layout>
       <Routes>
