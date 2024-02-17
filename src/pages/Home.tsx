@@ -11,9 +11,9 @@ export const Home: FC = () => {
   const currentDate = new Date();
   const currentDayOfWeek = currentDate.getDay();
   const currentDayOfMonth = currentDate.getDate();
-  const [visit, setVisit] = React.useState([]);
-
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+  const [visit, setVisit] = React.useState([]);
   const [activeDay, setActiveDay] = React.useState(null);
 
   const onChoiceDay = async (dayIndex: React.SetStateAction<null>) => {
