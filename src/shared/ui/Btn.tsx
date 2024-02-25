@@ -1,7 +1,9 @@
 import { Button } from 'antd';
 
 export const Btn = ({ children, width, closeModal, variant }) => {
-  let buttonClassName = `flex items-center justify-center py-[13px] h-[50px] text-[16px] border-[0px]  rounded-[10px]`;
+  let buttonClassName = `flex items-center justify-center py-[13px] h-[50px] text-[16px] border-[0px]  rounded-[10px] ${
+    width ? 'w-[364px || 200px]' : width
+  }`;
   let backgroundColor, textColor;
 
   switch (variant) {

@@ -8,7 +8,8 @@ function App() {
   const routes = [
     { path: '/', element: <Home /> },
     { path: '/add-visiting', element: <AddVisiting /> },
-    { path: '/patients/:id', element: <PatientCard /> },
+    { path: '/patients-card/:id', element: <PatientCard /> },
+    { path: '/change-visiting/:id', element: <AddVisiting /> },
   ];
   return (
     <Layout>

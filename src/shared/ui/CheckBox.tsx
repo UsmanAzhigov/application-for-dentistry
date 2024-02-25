@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Stack } from '@mui/material';
 import btnCheck from '../icon/check-box.svg';
 
-export const Checkbox = () => {
+export const Checkbox = ({ onPrepayment }) => {
   const [onCheck, setOnCheck] = useState({ checkbox1: false, checkbox2: false });
 
   const handleCheckboxToggle = (checkbox: string) => {
@@ -10,6 +10,7 @@ export const Checkbox = () => {
       ...prevOnCheck,
       [checkbox]: !prevOnCheck[checkbox],
     }));
+    onPrepayment();
   };
   return (
     <Stack

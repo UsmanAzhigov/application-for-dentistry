@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const BtnTime = ({ variant, arrivalTime }) => {
   let buttonClassName = `flex items-center py-[9px] px-[8px] rounded-[10px] w-[55px] h-[32px]`;
   let backgroundColor, textColor;
@@ -25,6 +23,7 @@ export const BtnTime = ({ variant, arrivalTime }) => {
       backgroundColor = 'bg-[#F6F6F6] opacity-50';
       textColor = 'text-[#949494]';
       break;
+
     default: {
       backgroundColor = 'bg-[#DCF3FF]';
       textColor = 'text-[#00A6FB]';

@@ -2,20 +2,25 @@ import React, { FC } from 'react';
 import Fab from '@mui/material/Fab';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import axios from 'axios';
 import { BtnDay } from '../shared/ui/BtnDay';
 import { PatientTime } from '../features/PatientTime';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { fetchDeleteVisit, fetchVisits, setVisits } from '../redux/home/homeSlice';
 export const Home: FC = () => {
   const numberOfDays = 31;
   const currentDate = new Date();
   const currentDayOfWeek = currentDate.getDay();
   const currentDayOfMonth = currentDate.getDate();
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-
-  const [visit, setVisit] = React.useState([]);
-  const [activeDay, setActiveDay] = React.useState(null);
-
+  const [activeDay, setActiveDay] = React.useState(0);
+  const { items } = useSelector((state: RootState) => state.home);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    const date = currentDate.getDate();
+    const month = currentDate.toLocaleDateString('ru-RU', { month: 'long' });
+    dispatch(fetchVisits({ date, month }));
+  }, []);
   const onChoiceDay = async (dayIndex: React.SetStateAction<null>) => {
     const selectedDate = new Date(
       currentDate.getFullYear(),
@@ -24,14 +29,21 @@ export const Home: FC = () => {
     );
     try {
       const month = selectedDate.toLocaleDateString('ru-RU', { month: 'long' });
-      const { data } = await axios.get(
-        `http://localhost:5000/visits/${selectedDate.getDate()}/${month}`,
-      );
-      setVisit(data);
+      const date = selectedDate.getDate();
+      await dispatch(fetchVisits({ date, month }));
     } catch (error) {
-      setVisit([]);
+      console.log(error);
+      setVisits([]);
     }
     setActiveDay(dayIndex);
+  };
+  const deleteVisit = (id) => {
+    try {
+      dispatch(fetchDeleteVisit({ id }));
+      dispatch(setVisits(items.filter((obj: any) => obj._id !== id)));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -52,19 +64,32 @@ export const Home: FC = () => {
           })}
         </div>
       </div>
-      {visit.map(
-        (items: { _id: string; fullName: string; diagnosis: string; arrivalTime: string }) => {
-          return (
-            <Link to={`/patients/${items.fullName}`} key={items._id}>
-              <PatientTime
-                variant="expectation"
-                fullName={items.fullName}
-                diagnosis={items.diagnosis}
-                arrivalTime={items.arrivalTime}
-              />
-            </Link>
-          );
-        },
+      {items ? (
+        items.map(
+          (item: {
+            _id: string;
+            patientId: string;
+            fullName: string;
+            diagnosis: string;
+            arrivalTime: string;
+            prepayment: string;
+            status: string;
+          }) => (
+            <PatientTime
+              variant={item.status}
+              fullName={item.fullName}
+              diagnosis={item.diagnosis}
+              arrivalTime={item.arrivalTime}
+              deleteVisit={deleteVisit}
+              patientId={item.patientId}
+              _id={item._id}
+            />
+          ),
+        )
+      ) : (
+        <div>
+          <h2>На сегодня пациентов нет, отдыхай!</h2>
+        </div>
       )}
 
       <Link to={'/add-visiting'} key="add-visiting">
